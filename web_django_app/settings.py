@@ -37,9 +37,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 跨域
+    'corsheaders',
 ]
 
+# CORS组的配置信息
+CORS_ORIGIN_WHITELIST= (
+    # 部分版本需要协议，"http://127.0.0.1:8080"
+	'http://127.0.0.1:8080',
+)
+# 是否允许ajax跨域请求时携带cookie
+CORS_ALLOW_CREDENTIALS = False
+
 MIDDLEWARE = [
+    # 跨域，中间件，必须放在第一行
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'web_django_app.urls'
 
