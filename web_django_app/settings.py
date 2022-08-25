@@ -50,6 +50,7 @@ CORS_ORIGIN_WHITELIST= (
 # 是否允许ajax跨域请求时携带cookie
 CORS_ALLOW_CREDENTIALS = False
 
+
 MIDDLEWARE = [
     # 跨域，中间件，必须放在第一行
     'corsheaders.middleware.CorsMiddleware',
