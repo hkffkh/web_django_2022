@@ -175,3 +175,9 @@ LOGGING = {
         },
     }
 }
+
+
+REST_FRAMEWORK = {
+    # 异常处理
+    'EXCEPTION_HANDLER': 'web_api_study.utils.exceptions.custom_exception_handler',
+}
