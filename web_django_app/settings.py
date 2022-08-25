@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -121,3 +121,56 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# 日志配置
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    # 日志的格式
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    # 日志的过滤信息
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    # 日志的处理方式
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            # 日志位置，日志文件名，日志保存目录logs必须手动创建
+            'filename': os.path.join(BASE_DIR, "logs/web.log"),
+            # 日志文件的最大值，此处设置300M
+            'maxBytes': 300 * 1024 * 1024,
+            # 日志文件的数量，设置最大日志数量为10
+            'backupCount': 10,
+            # 日志格式：详细格式
+            'formatter': 'verbose'
+        },
+    },
+    # 日志对象
+    'loggers': {
+        'django': {
+            'handlers': ['console','file'],
+            'propagate': True,
+        },
+    }
+}
