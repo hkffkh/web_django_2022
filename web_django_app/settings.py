@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# 新增一个系统导包路径
+# 把apps目录下的所有子应用设置为可以直接导包，那就需要把apps设置为默认导包路径
+sys.path.insert(0, os.path.join(BASE_DIR,"web_django_app/apps"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,6 +45,21 @@ INSTALLED_APPS = [
 
     # 跨域
     'corsheaders',
+
+    # drf框架（实现API接口）：
+    # 将请求的数据（如JSON格式）转换为模型类对象
+    # 操作数据库
+    # 将模型类对象转换为响应的数据（如JSON格式）
+    'rest_framework',
+
+    # xadmin相关
+    'xadmin',
+    'crispy_forms',
+    'reversion',
+
+    # 子应用
+    # "home",
+    "user",
 ]
 
 # CORS组的配置信息
@@ -123,9 +143,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# 修改使用中文界面
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+# 修改时区
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
