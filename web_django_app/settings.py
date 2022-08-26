@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'reversion',
 
     # 子应用
-    # "home",
+    "home",
     "user",
 ]
 
@@ -232,4 +232,22 @@ LOGGING = {
 REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'web_api_study.utils.exceptions.custom_exception_handler',
+
+    # 登录认证
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
+
+import datetime
+JWT_AUTH = {
+    # 设置jwt有效期
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    # 设置返回数据的格式
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'user.utils.jwt_response_payload_handler',
+}
+
+# 注册自定义用户模型 user\models.py 文件中ctrl+点击AbstractUser，进入auth\models.py, class User最后一行“AUTH_USER_MODEL”
+AUTH_USER_MODEL = "user.User"   # “子应用名称.模型类名”
