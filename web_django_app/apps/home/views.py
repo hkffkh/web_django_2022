@@ -5,7 +5,7 @@ from .models import Banner, Nav
 from .serializers import BannerModelSerializer, NavModelSerializer
 class BannerListAPIView(ListAPIView):   # 自动导包
     """轮播视图"""
-    queryset = Banner.objects.filter(is_show=True, is_deleted=False).order_by("-orders","-id")[:7] # order_by排序，负号：倒序排序
+    queryset = Banner.objects.filter(is_show=True, is_deleted=False).order_by("orders","-id")[:7] # order_by排序，负号：倒序排序
     serializer_class = BannerModelSerializer    # 序列化器
 
 
