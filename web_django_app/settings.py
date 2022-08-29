@@ -231,7 +231,7 @@ LOGGING = {
 
 REST_FRAMEWORK = {
     # 异常处理
-    'EXCEPTION_HANDLER': 'web_api_study.utils.exceptions.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'web_django_app.utils.exceptions.custom_exception_handler',
 
     # 登录认证
     'DEFAULT_AUTHENTICATION_CLASSES': (
