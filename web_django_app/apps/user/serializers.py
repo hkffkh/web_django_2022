@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework_jwt.settings import api_settings
+from .utils import get_user_by_account
 
 class UserModelSerializer(serializers.ModelSerializer):
     """用户注册信息序列化器"""
