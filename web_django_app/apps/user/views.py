@@ -15,12 +15,13 @@ class UserAPIView(CreateAPIView):
     serializer_class = UserModelSerializer
 
 
+
 """
-GET /user/mobile/<mobile>/
+GET /user/username/<username>/
 """
 class MobileAPIView(APIView):
-    def get(self, request, mobile):
-        ret = get_user_by_account(mobile)
+    def get(self, request, username):
+        ret = get_user_by_account(username)
         if ret is not None:
-            return Response({"message":"该手机号已被注册！"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"该用户名已被注册！"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_200_OK)

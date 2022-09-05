@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser # 继承django原有的用�
 
 
 class User(AbstractUser):
-    mobile = models.CharField(max_length=15, unique=True, verbose_name="手机号")
+    mobile = models.CharField(max_length=15, null=True, blank=True, verbose_name="手机号")
     avatar = models.ImageField(upload_to="avatar", null=True, blank=True, verbose_name="用户头像")
 
     class Meta:

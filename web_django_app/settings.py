@@ -284,10 +284,10 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'user.utils.jwt_response_payload_handler',
 }
 
-# 实现多条件（用户名，手机号）登陆判断
-AUTHENTICATION_BACKENDS = [
-    'user.utils.UsernameMobileAuthBackend',
-]
+# # 实现多条件（用户名，手机号）登陆判断
+# AUTHENTICATION_BACKENDS = [
+#     'user.utils.UsernameMobileAuthBackend',
+# ]
 
 # 注册自定义用户模型 user\models.py 文件中ctrl+点击AbstractUser，进入auth\models.py, class User最后一行“AUTH_USER_MODEL”
 AUTH_USER_MODEL = "user.User"   # “子应用名称.模型类名”

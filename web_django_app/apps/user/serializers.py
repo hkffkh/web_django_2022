@@ -3,49 +3,44 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework_jwt.settings import api_settings
+from rest_framework_jwt.views import obtain_jwt_token
 from .utils import get_user_by_account
+
 
 class UserModelSerializer(serializers.ModelSerializer):
     """用户注册信息序列化器"""
-    sms_code = serializers.CharField(label='手机验证码', required=True, allow_null=False, allow_blank=False, write_only=True)
-    # password2 = serializers.CharField(label='确认密码', required=True, allow_null=False, allow_blank=False, write_only=True)
+    token = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['sms_code', 'mobile', 'password']
+        fields = ['token', 'id', 'username', 'password']
         extra_kwargs = {
-            "password":{
-                "write_only":True
+            "password": {
+                "write_only": True
             }
         }
 
     def validate(self, attrs):
-
-        mobile = attrs.get("mobile")
-        sms_code = attrs.get("sms_code")
-        password = attrs.get("password")
-        # 验证手机号是否被注册
+        username = attrs.get("username")
+        # 验证用户名是否被注册
         try:
-            user = User.objects.get(mobile=mobile)
+            user = User.objects.get(username=username)
         except User.DoesNotExist:
             user = None
         if user is not None:
-            raise serializers.ValidationError("该手机号已被注册！")
-
-        # todo 验证短信验证码是否正确
+            raise serializers.ValidationError("该用户名已被注册！")
 
         return attrs
 
     def create(self, validated_data):
         """用户信息，创建用户"""
-        validated_data.pop("sms_code")  # 去除验证码，其余内容保留，需要存至数据库
+        # validated_data.pop("sms_code")  # 去除验证码，其余内容保留，需要存至数据库
         # 对密码hash加密
         raw_password = validated_data.get("password")
         hash_password = make_password(raw_password)
-        mobile = validated_data.get("mobile")
-        # 调用序列化器提供的create方法
+        username = validated_data.get("username")
         user = User.objects.create(
-            mobile=mobile,
-            username=mobile,   # 用户名初始默认（手机号）
+            username=username,
             password=hash_password,
         )
 
@@ -55,5 +50,9 @@ class UserModelSerializer(serializers.ModelSerializer):
 
         payload = jwt_payload_handler(user)
         user.token = jwt_encode_handler(payload)
+        # 调用序列化器提供的create方法
 
         return user
+
+    def get_token(self, user):
+        return user.token
