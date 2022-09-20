@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     # 子应用
     "home",
     "user",
+    "scene",
 ]
 
 # CORS组的配置信息
