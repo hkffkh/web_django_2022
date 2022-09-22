@@ -28,9 +28,14 @@ sys.path.insert(0, os.path.join(BASE_DIR,"web_django_app/apps"))
 SECRET_KEY = 'django-insecure-&24^v^+tioth0(9aj5ga@9lb5#x!)!3!kda3yqc33xhtm3l9_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# （部署false，调试true）
 DEBUG = True
+# DEBUG = False
 
+# （部署，调试模）
 ALLOWED_HOSTS = ['127.0.0.1']
+# 修改项。允许所有的IP访问网络服务
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -195,10 +200,21 @@ USE_TZ = True
 
 # 访问静态文件的url地址前缀
 STATIC_URL = '/static/'
-# 设置django的静态文件目录
+
+# （调试模式） 设置django的静态文件目录
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,"static")
 ]
+
+# # （部署模式）修改项。指定需要收集的静态文件的位置
+# # 即前端打包文件所在位置
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "web2022_front/dist/"),
+# ]
+#
+# # （部署模式）新增项。静态文件收集目录
+# STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
 
 # 项目中存储上传文件的根目录[暂时配置]，注意，uploads目录需要手动创建否则上传文件时报错
 MEDIA_ROOT=os.path.join(BASE_DIR,"web_django_app/uploads")
